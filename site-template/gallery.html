@@ -133,9 +133,13 @@
         <label for="chat-phone">Phone number</label>
         <input id="chat-phone" type="tel" required>
       </div>
-      <button class="btn btn-primary btn-block" type="submit">Start chat</button>
+      <div class="field">
+        <label for="chat-message">What do you need?</label>
+        <textarea id="chat-message" rows="3"></textarea>
+      </div>
+      <button class="btn btn-primary btn-block" type="submit">Send Message</button>
     </form>
-    <div class="chat-confirm">Thanks! Someone from {{business_name}} will text you shortly.</div>
+    <div class="chat-confirm">Thanks! {{business_name}} has received your message and will reach out shortly.</div>
   </div>
 </div>
 
