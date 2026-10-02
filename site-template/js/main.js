@@ -1,9 +1,9 @@
 /* ==========================================================================
    Contractor Site Template — Shared behavior
-   Covers: mobile nav toggle, persistent chat widget shell, and form
-   submit handling. Chat widget and quote/contact forms POST lead data
-   to the East Industries Site Lead Webhook, which notifies the
-   contractor (and Matt) by SMS.
+   Covers: mobile nav toggle, persistent chat widget shell, form
+   submit handling, and missed-call text-back. Chat widget, quote/contact
+   forms, and Call Now clicks all notify the contractor (and Mr. East) by SMS
+   via n8n webhooks.
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', function () {
   /* ---------- Mobile nav toggle ---------- */
@@ -92,6 +92,29 @@ document.addEventListener('DOMContentLoaded', function () {
       var confirm = form.parentElement.querySelector('.form-confirm');
       form.style.display = 'none';
       if (confirm) confirm.style.display = 'block';
+    });
+  });
+
+  /* ---------- Missed-call text-back ---------- */
+  var CALL_WEBHOOK_URL = 'https://landoneast.app.n8n.cloud/webhook/call-now-click';
+
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[href^="tel:"]');
+    if (!link) return;
+
+    var contractorPhone = getContractorPhone();
+    if (!contractorPhone) return;
+
+    fetch(CALL_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        business_name: getBusinessName(),
+        contractor_phone: contractorPhone
+      }),
+      keepalive: true
+    }).catch(function (err) {
+      console.error('Call webhook error:', err);
     });
   });
 });
