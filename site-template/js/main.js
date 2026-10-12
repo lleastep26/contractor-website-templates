@@ -48,7 +48,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function getGoogleReviewUrl() {
     var hidden = document.getElementById('contractor-google-review');
-    return hidden ? hidden.value : '';
+    var url = hidden ? hidden.value.trim() : '';
+    return /^https?:\/\//i.test(url) ? url : '';
   }
 
   function sendLead(data) {
