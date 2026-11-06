@@ -1,0 +1,44 @@
+<section class="page-hero page-banner"{{{banner_attrs}}}>
+  <div class="container">
+    <span class="eyebrow">{{trade}} · {{city}}</span>
+    <h1>{{service_title}}</h1>
+    <p class="lead">{{service_description}}</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="tel:{{phone_tel}}">Call Now {{phone_display}}</a>
+      <a class="btn btn-secondary" href="contact.html#quote">Get Free Quote</a>
+    </div>
+  </div>
+</section>
+{{{trust_bar}}}
+<section>
+  <div class="container service-layout">
+    <div class="service-copy">
+      <span class="eyebrow">About this service</span>
+      <h2>{{service_heading}}</h2>
+{{{service_paragraphs}}}
+    </div>
+    <div class="service-aside">
+{{{service_photo}}}
+      <div class="ticket info-stub included-box">
+        <span class="ticket-tag">What's included</span>
+        <div class="ticket-tear"></div>
+        <ul class="included-list">
+{{{included_items}}}
+        </ul>
+        <a class="btn btn-primary btn-block" href="tel:{{phone_tel}}">Call {{phone_display}}</a>
+        <a class="btn btn-accent btn-block" href="contact.html">Get Free Quote</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section-alt" style="border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">FAQ</span>
+      <h2>{{service_title}} questions</h2>
+    </div>
+    <div class="faq-list">
+{{{faq_items}}}
+    </div>
+  </div>
+</section>

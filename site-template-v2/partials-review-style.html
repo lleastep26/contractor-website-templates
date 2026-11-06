@@ -1,0 +1,71 @@
+<style>
+  /* ---------- Leave a review (self-contained, no css/style.css changes needed) ---------- */
+  .review-panel {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 12, 16, 0.55);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  body.review-open .review-panel {
+    display: flex;
+  }
+  .review-panel-inner {
+    position: relative;
+    background: #fff;
+    border-radius: 14px;
+    max-width: 420px;
+    width: 100%;
+    padding: 28px 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  }
+  .review-panel-inner h3 {
+    margin: 0 0 6px;
+  }
+  .review-sub {
+    margin: 0 0 4px;
+    font-size: 0.92rem;
+    color: #555;
+  }
+  .review-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #333;
+  }
+  .star-picker {
+    display: flex;
+    gap: 8px;
+    margin: 14px 0 18px;
+  }
+  .star-picker .star {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #d8d8d8;
+    padding: 0;
+    transition: color 0.15s ease;
+  }
+  .star-picker .star.is-selected {
+    color: var(--brand, #C8102E);
+  }
+  .footer-review-link {
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+  }
+</style>

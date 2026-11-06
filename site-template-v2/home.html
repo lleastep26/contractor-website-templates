@@ -1,0 +1,122 @@
+<section class="hero"{{{hero_attrs}}}>
+  <div class="container">
+    <div>
+      <span class="eyebrow">{{trade}} · {{city}}</span>
+      <h1>{{headline}}</h1>
+      <p class="hero-sub">{{subheadline}}</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="contact.html#quote">{{quote_button_text}}</a>
+        <a class="btn btn-secondary" href="tel:{{phone_tel}}">Call {{phone_display}}</a>
+      </div>
+      <div class="hero-badges">
+{{{hero_badges}}}
+      </div>
+    </div>
+
+    <div class="ticket quote-ticket" id="quote">
+      <div class="ticket-head">
+        <span class="ticket-tag">Estimate Request</span>
+        <span class="ticket-num">No. 001</span>
+      </div>
+      <h3>{{cta_headline}}</h3>
+      <p style="font-size:0.9rem;">{{cta_subtext}}</p>
+      <div class="ticket-tear"></div>
+      <form data-lead-form>
+        <div class="field">
+          <label for="qname">Name</label>
+          <input id="qname" type="text" required>
+        </div>
+        <div class="field">
+          <label for="qphone">Phone</label>
+          <input id="qphone" type="tel" required>
+        </div>
+        <div class="field">
+          <label for="qmsg">What do you need done?</label>
+          <textarea id="qmsg" rows="3"></textarea>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">{{quote_button_text}}</button>
+        <p class="form-note">No obligation. We usually reply same day.</p>
+      </form>
+      <div class="form-confirm" style="display:none; text-align:center; padding:20px 0;">
+        <strong>Got it — thanks!</strong>
+        <p style="margin-top:6px;">{{business_name}} will reach out shortly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{{trust_bar}}}
+
+<section id="services" class="section-alt">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">What we do</span>
+      <h2>{{services_headline}}</h2>
+      <p>{{services_subheadline}}</p>
+    </div>
+    <div class="services-grid">
+{{{service_cards}}}
+    </div>
+  </div>
+</section>
+
+<section id="areas">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Service areas</span>
+      <h2>Areas We Serve</h2>
+      <p>{{areas_intro}}</p>
+    </div>
+    <div class="services-grid">
+{{{area_cards}}}
+    </div>
+  </div>
+</section>
+
+<section class="section-alt" style="border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="container about-grid">
+    <div>
+      <span class="eyebrow">About us</span>
+      <h2>{{business_name}}</h2>
+      <p>{{about_text}}</p>
+      <a class="btn btn-ghost" href="contact.html">Get in touch →</a>
+    </div>
+    <div>
+{{{about_photo}}}
+      <div class="ticket info-stub">
+        <span class="ticket-tag">Business Details</span>
+        <div class="ticket-tear"></div>
+{{{info_rows}}}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-tint">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Reviews</span>
+      <h2>What customers say</h2>
+    </div>
+    <div class="testimonial-grid">
+{{{testimonials}}}
+    </div>
+    <div style="text-align:center; margin-top:28px;">
+      <button class="btn btn-secondary" type="button" data-review-trigger>Leave us a review</button>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="cta-band">
+      <span class="eyebrow" style="color:#fff;">Ready when you are</span>
+      <h2>{{cta_headline}}</h2>
+      <p>{{cta_subtext}}</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="contact.html#quote">{{quote_button_text}}</a>
+        <a class="btn btn-secondary" href="tel:{{phone_tel}}">Call {{phone_display}}</a>
+      </div>
+    </div>
+  </div>
+</section>

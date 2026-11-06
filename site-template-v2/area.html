@@ -1,0 +1,56 @@
+<section class="page-banner"{{{banner_attrs}}}>
+  <div class="container">
+    <span class="eyebrow">{{business_name}} · Service area</span>
+    <h1>{{area_h1}}</h1>
+    <p class="lead">{{area_lead}}</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="tel:{{phone_tel}}">Call Now {{phone_display}}</a>
+      <a class="btn btn-secondary" href="#quote">Get Free Quote</a>
+    </div>
+  </div>
+</section>
+{{{trust_bar}}}
+<section>
+  <div class="container">
+    <div class="area-layout">
+      <div>
+        <div class="section-head">
+          <span class="eyebrow">{{area_city}}</span>
+          <h2>{{area_heading}}</h2>
+        </div>
+        <div class="area-copy">
+{{{area_paragraphs}}}
+        </div>
+      </div>
+      <aside class="included-box">
+        <h3>Services in {{area_city}}</h3>
+        <ul>
+{{{area_service_list}}}
+        </ul>
+        <a class="btn btn-primary btn-block" href="tel:{{phone_tel}}">Call {{phone_display}}</a>
+      </aside>
+    </div>
+  </div>
+</section>
+<section class="section-alt" style="border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Our services</span>
+      <h2>Services available in {{area_city}}</h2>
+    </div>
+    <div class="services-grid">
+{{{service_cards}}}
+    </div>
+  </div>
+</section>
+<section id="get-quote" class="section-tint">
+  <div class="container two-col">
+    <div>
+      <span class="eyebrow">Get started</span>
+      <h2>Request a quote in {{area_city}}</h2>
+      <p>Tell us what you need and {{business_name}} will get back to you with an estimate.</p>
+      <a class="btn btn-primary" href="tel:{{phone_tel}}">Call Now {{phone_display}}</a>
+    </div>
+{{{contact_form}}}
+  </div>
+</section>

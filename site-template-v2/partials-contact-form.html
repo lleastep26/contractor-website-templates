@@ -1,0 +1,33 @@
+    <div class="ticket quote-ticket" id="quote">
+      <div class="ticket-head">
+        <span class="ticket-tag">Estimate Request</span>
+        <span class="ticket-num">No. 001</span>
+      </div>
+      <h3>{{cta_headline}}</h3>
+      <p style="font-size:0.9rem;">{{cta_subtext}}</p>
+      <div class="ticket-tear"></div>
+      <form data-lead-form>
+        <div class="field">
+          <label for="cname">Name</label>
+          <input id="cname" type="text" required>
+        </div>
+        <div class="field">
+          <label for="cphone">Phone</label>
+          <input id="cphone" type="tel" required>
+        </div>
+        <div class="field">
+          <label for="cemail">Email</label>
+          <input id="cemail" type="email">
+        </div>
+        <div class="field">
+          <label for="cmsg">What do you need done?</label>
+          <textarea id="cmsg" rows="4"></textarea>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">{{quote_button_text}}</button>
+        <p class="form-note">No obligation. We usually reply same day.</p>
+      </form>
+      <div class="form-confirm" style="display:none; text-align:center; padding:20px 0;">
+        <strong>Got it — thanks!</strong>
+        <p style="margin-top:6px;">{{business_name}} will reach out shortly.</p>
+      </div>
+    </div>

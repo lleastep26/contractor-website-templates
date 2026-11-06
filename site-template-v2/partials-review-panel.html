@@ -1,0 +1,37 @@
+<div class="review-panel">
+  <div class="review-panel-inner">
+    <button class="review-close" aria-label="Close review" type="button">&times;</button>
+
+    <div data-review-step="rating">
+      <h3>How did we do?</h3>
+      <p class="review-sub">Tap a star to rate your experience with {{business_name}}.</p>
+      <div class="star-picker" data-star-picker role="radiogroup" aria-label="Star rating">
+        <button type="button" class="star" data-star-value="1" aria-label="1 star">★</button>
+        <button type="button" class="star" data-star-value="2" aria-label="2 stars">★</button>
+        <button type="button" class="star" data-star-value="3" aria-label="3 stars">★</button>
+        <button type="button" class="star" data-star-value="4" aria-label="4 stars">★</button>
+        <button type="button" class="star" data-star-value="5" aria-label="5 stars">★</button>
+      </div>
+      <div class="field">
+        <label for="review-message">Leave a message (optional)</label>
+        <textarea id="review-message" rows="3"></textarea>
+      </div>
+      <button class="btn btn-primary btn-block" type="button" data-review-submit disabled>Submit</button>
+    </div>
+
+    <div data-review-step="thanks-redirect" style="display:none;">
+      <h3>Thanks for the kind words!</h3>
+      <p>Taking you to leave your review now…</p>
+    </div>
+
+    <div data-review-step="thanks-public" style="display:none;">
+      <h3>Thanks for the kind words!</h3>
+      <p>We really appreciate you taking the time to let us know.</p>
+    </div>
+
+    <div data-review-step="thanks-private" style="display:none;">
+      <h3>Thanks for letting us know</h3>
+      <p>{{business_name}} has received your feedback and will follow up directly.</p>
+    </div>
+  </div>
+</div>
