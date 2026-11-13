@@ -523,6 +523,12 @@ section { padding: 96px 0; }
 }
 .field textarea { resize: vertical; min-height: 84px; }
 .form-note { font-size: 0.8rem; color: var(--ink-faint); margin-top: 10px; text-align: center; }
+.sms-disclosure { font-size: 0.72rem; line-height: 1.45; color: var(--ink-faint); margin-top: 10px; text-align: left; }
+.sms-disclosure a { color: inherit; text-decoration: underline; }
+.legal-copy { max-width: 72ch; }
+.legal-copy h2 { font-size: 1.25rem; margin: 28px 0 8px; }
+.legal-copy h2:first-child { margin-top: 0; }
+.legal-copy p { margin: 0 0 12px; }
 
 /* ---------- Services grid + cards ---------- */
 .services-grid {
