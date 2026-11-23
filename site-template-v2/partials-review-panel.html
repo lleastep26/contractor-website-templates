@@ -12,16 +12,24 @@
         <button type="button" class="star" data-star-value="4" aria-label="4 stars">★</button>
         <button type="button" class="star" data-star-value="5" aria-label="5 stars">★</button>
       </div>
-      <div class="field">
-        <label for="review-message">Leave a message (optional)</label>
-        <textarea id="review-message" rows="3"></textarea>
-      </div>
-      <button class="btn btn-primary btn-block" type="button" data-review-submit disabled>Submit</button>
     </div>
 
-    <div data-review-step="thanks-redirect" style="display:none;">
-      <h3>Thanks for the kind words!</h3>
-      <p>Taking you to leave your review now…</p>
+    <div data-review-step="low-rating-form" style="display:none;">
+      <h3>Sorry to hear you're not satisfied.</h3>
+      <p class="review-sub">Please provide us with your feedback, and we'll do our best to improve.</p>
+      <div class="field">
+        <label for="review-name">Name</label>
+        <input type="text" id="review-name">
+      </div>
+      <div class="field">
+        <label for="review-email">Email</label>
+        <input type="email" id="review-email">
+      </div>
+      <div class="field">
+        <label for="review-message">Feedback</label>
+        <textarea id="review-message" rows="3"></textarea>
+      </div>
+      <button class="btn btn-primary btn-block" type="button" data-review-submit>Submit</button>
     </div>
 
     <div data-review-step="thanks-public" style="display:none;">
@@ -30,8 +38,9 @@
     </div>
 
     <div data-review-step="thanks-private" style="display:none;">
-      <h3>Thanks for letting us know</h3>
-      <p>{{business_name}} has received your feedback and will follow up directly.</p>
+      <h3>I'm sorry we missed the mark.</h3>
+      <p>Thanks for letting us know. We value your review regardless and appreciate you letting us know where we can improve.</p>
+      <button class="btn btn-secondary btn-block" type="button" data-review-google-link style="display:none;">Leave us a review</button>
     </div>
   </div>
 </div>

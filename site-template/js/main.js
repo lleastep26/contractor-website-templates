@@ -132,7 +132,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var selectedRating = 0;
     var starButtons = reviewPanel.querySelectorAll('[data-star-picker] .star');
     var reviewSubmitBtn = reviewPanel.querySelector('[data-review-submit]');
+    var reviewNameField = document.getElementById('review-name');
+    var reviewEmailField = document.getElementById('review-email');
     var reviewMessageField = document.getElementById('review-message');
+    var reviewGoogleLinkBtn = reviewPanel.querySelector('[data-review-google-link]');
 
     function setStarDisplay(rating) {
       starButtons.forEach(function (btn) {
@@ -150,9 +153,29 @@ document.addEventListener('DOMContentLoaded', function () {
     function resetReviewPanel() {
       selectedRating = 0;
       setStarDisplay(0);
+      if (reviewNameField) reviewNameField.value = '';
+      if (reviewEmailField) reviewEmailField.value = '';
       if (reviewMessageField) reviewMessageField.value = '';
-      if (reviewSubmitBtn) reviewSubmitBtn.disabled = true;
       showReviewStep('rating');
+    }
+
+    function sendReview(rating, extra) {
+      var payload = {
+        business_name: getBusinessName(),
+        domain: window.location.hostname,
+        contractor_phone: getContractorPhone(),
+        rating: rating
+      };
+      for (var key in extra) payload[key] = extra[key];
+
+      return fetch(REVIEW_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(function (err) {
+        console.error('Review webhook error:', err);
+      });
     }
 
     document.querySelectorAll('[data-review-trigger]').forEach(function (trigger) {
@@ -173,40 +196,40 @@ document.addEventListener('DOMContentLoaded', function () {
       btn.addEventListener('click', function () {
         selectedRating = parseInt(btn.getAttribute('data-star-value'), 10);
         setStarDisplay(selectedRating);
-        if (reviewSubmitBtn) reviewSubmitBtn.disabled = false;
+
+        if (selectedRating >= 4) {
+          sendReview(selectedRating, {});
+          var googleUrl = getGoogleReviewUrl();
+          if (googleUrl) {
+            window.location.href = googleUrl;
+          } else {
+            showReviewStep('thanks-public');
+          }
+          return;
+        }
+
+        showReviewStep('low-rating-form');
       });
     });
 
     if (reviewSubmitBtn) {
       reviewSubmitBtn.addEventListener('click', function () {
-        if (!selectedRating) return;
-
-        fetch(REVIEW_WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            business_name: getBusinessName(),
-            domain: window.location.hostname,
-            contractor_phone: getContractorPhone(),
-            rating: selectedRating,
-            feedback: reviewMessageField ? reviewMessageField.value : ''
-          }),
-          keepalive: true
-        }).catch(function (err) {
-          console.error('Review webhook error:', err);
+        sendReview(selectedRating, {
+          name: reviewNameField ? reviewNameField.value : '',
+          email: reviewEmailField ? reviewEmailField.value : '',
+          feedback: reviewMessageField ? reviewMessageField.value : ''
         });
 
-        if (selectedRating >= 4) {
-          var googleUrl = getGoogleReviewUrl();
+        var googleUrl = getGoogleReviewUrl();
+        if (reviewGoogleLinkBtn) {
           if (googleUrl) {
-            showReviewStep('thanks-redirect');
-            setTimeout(function () {
-              window.location.href = googleUrl;
-            }, 900);
-            return;
+            reviewGoogleLinkBtn.style.display = '';
+            reviewGoogleLinkBtn.onclick = function () {
+              window.open(googleUrl, '_blank', 'noopener');
+            };
+          } else {
+            reviewGoogleLinkBtn.style.display = 'none';
           }
-          showReviewStep('thanks-public');
-          return;
         }
 
         showReviewStep('thanks-private');
