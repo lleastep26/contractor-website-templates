@@ -262,6 +262,7 @@ section { padding: 88px 0; }
 @media (max-width: 860px) {
   .main-nav { display: none; }
   .call-pill span.txt { display: none; }
+  .header-actions .btn-sm { display: none; }
   .nav-toggle { display: inline-flex; }
   body.nav-open .main-nav {
     display: flex;
