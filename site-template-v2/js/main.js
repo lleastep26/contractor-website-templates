@@ -1,5 +1,7 @@
 /* ==========================================================================
    site-template-v2 — Shared behavior
+   Covers: mobile nav toggle, lead/contact form submission, and
+   leave-a-review.
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', function () {
   /* ---------- Mobile nav toggle ---------- */
@@ -15,9 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* ---------- Lead webhook ---------- */
-  var LEAD_WEBHOOK_URL = 'https://landoneast.app.n8n.cloud/webhook/site-lead';
-
   function getBusinessName() {
     var brand = document.querySelector('.site-header .brand-mark');
     return brand ? brand.textContent.trim() : '';
@@ -27,6 +26,15 @@ document.addEventListener('DOMContentLoaded', function () {
     var hidden = document.getElementById('contractor-phone');
     return hidden ? hidden.value : '';
   }
+
+  function getGoogleReviewUrl() {
+    var hidden = document.getElementById('contractor-google-review');
+    var url = hidden ? hidden.value.trim() : '';
+    return /^https?:\/\//i.test(url) ? url : '';
+  }
+
+  /* ---------- Lead webhook ---------- */
+  var LEAD_WEBHOOK_URL = 'https://landoneast.app.n8n.cloud/webhook/site-lead';
 
   function sendLead(data) {
     return fetch(LEAD_WEBHOOK_URL, {
@@ -59,4 +67,117 @@ document.addEventListener('DOMContentLoaded', function () {
       if (confirm) confirm.style.display = 'block';
     });
   });
+
+  /* ---------- Leave a review ---------- */
+  var REVIEW_WEBHOOK_URL = 'https://landoneast.app.n8n.cloud/webhook/review-submitted';
+  var reviewPanel = document.querySelector('.review-panel');
+
+  if (reviewPanel) {
+    var selectedRating = 0;
+    var starButtons = reviewPanel.querySelectorAll('[data-star-picker] .star');
+    var reviewSubmitBtn = reviewPanel.querySelector('[data-review-submit]');
+    var reviewNameField = document.getElementById('review-name');
+    var reviewEmailField = document.getElementById('review-email');
+    var reviewMessageField = document.getElementById('review-message');
+    var reviewGoogleLinkBtn = reviewPanel.querySelector('[data-review-google-link]');
+
+    function setStarDisplay(rating) {
+      starButtons.forEach(function (btn) {
+        var val = parseInt(btn.getAttribute('data-star-value'), 10);
+        btn.classList.toggle('is-selected', val <= rating);
+      });
+    }
+
+    function showReviewStep(stepName) {
+      reviewPanel.querySelectorAll('[data-review-step]').forEach(function (stepEl) {
+        stepEl.style.display = stepEl.getAttribute('data-review-step') === stepName ? 'block' : 'none';
+      });
+    }
+
+    function resetReviewPanel() {
+      selectedRating = 0;
+      setStarDisplay(0);
+      if (reviewNameField) reviewNameField.value = '';
+      if (reviewEmailField) reviewEmailField.value = '';
+      if (reviewMessageField) reviewMessageField.value = '';
+      showReviewStep('rating');
+    }
+
+    function sendReview(rating, extra) {
+      var payload = {
+        business_name: getBusinessName(),
+        domain: window.location.hostname,
+        contractor_phone: getContractorPhone(),
+        rating: rating
+      };
+      for (var key in extra) payload[key] = extra[key];
+
+      return fetch(REVIEW_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(function (err) {
+        console.error('Review webhook error:', err);
+      });
+    }
+
+    document.querySelectorAll('[data-review-trigger]').forEach(function (trigger) {
+      trigger.addEventListener('click', function () {
+        resetReviewPanel();
+        document.body.classList.add('review-open');
+      });
+    });
+
+    var reviewClose = reviewPanel.querySelector('.review-close');
+    if (reviewClose) {
+      reviewClose.addEventListener('click', function () {
+        document.body.classList.remove('review-open');
+      });
+    }
+
+    starButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        selectedRating = parseInt(btn.getAttribute('data-star-value'), 10);
+        setStarDisplay(selectedRating);
+
+        if (selectedRating >= 4) {
+          sendReview(selectedRating, {});
+          var googleUrl = getGoogleReviewUrl();
+          if (googleUrl) {
+            window.location.href = googleUrl;
+          } else {
+            showReviewStep('thanks-public');
+          }
+          return;
+        }
+
+        showReviewStep('low-rating-form');
+      });
+    });
+
+    if (reviewSubmitBtn) {
+      reviewSubmitBtn.addEventListener('click', function () {
+        sendReview(selectedRating, {
+          name: reviewNameField ? reviewNameField.value : '',
+          email: reviewEmailField ? reviewEmailField.value : '',
+          feedback: reviewMessageField ? reviewMessageField.value : ''
+        });
+
+        var googleUrl = getGoogleReviewUrl();
+        if (reviewGoogleLinkBtn) {
+          if (googleUrl) {
+            reviewGoogleLinkBtn.style.display = '';
+            reviewGoogleLinkBtn.onclick = function () {
+              window.open(googleUrl, '_blank', 'noopener');
+            };
+          } else {
+            reviewGoogleLinkBtn.style.display = 'none';
+          }
+        }
+
+        showReviewStep('thanks-private');
+      });
+    }
+  }
 });
