@@ -79,7 +79,25 @@ document.addEventListener('DOMContentLoaded', function () {
     var reviewNameField = document.getElementById('review-name');
     var reviewEmailField = document.getElementById('review-email');
     var reviewMessageField = document.getElementById('review-message');
-    var reviewGoogleLinkBtn = reviewPanel.querySelector('[data-review-google-link]');
+    var reviewGoogleLinkBtns = reviewPanel.querySelectorAll('[data-review-google-link]');
+    var ratingSent = false;
+
+    // Every rating gets the Google review link, never only the good ones:
+    // Google's rules don't allow asking only happy customers for a public
+    // review. A low rating also gets a private feedback form, as an extra.
+    function showGoogleLinks() {
+      var googleUrl = getGoogleReviewUrl();
+      reviewGoogleLinkBtns.forEach(function (btn) {
+        btn.style.display = googleUrl ? '' : 'none';
+        btn.onclick = function () {
+          if (!ratingSent) {
+            sendReview(selectedRating, {});
+            ratingSent = true;
+          }
+          window.open(googleUrl, '_blank', 'noopener');
+        };
+      });
+    }
 
     function setStarDisplay(rating) {
       starButtons.forEach(function (btn) {
@@ -96,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function resetReviewPanel() {
       selectedRating = 0;
+      ratingSent = false;
       setStarDisplay(0);
       if (reviewNameField) reviewNameField.value = '';
       if (reviewEmailField) reviewEmailField.value = '';
@@ -152,6 +171,8 @@ document.addEventListener('DOMContentLoaded', function () {
           return;
         }
 
+        // The Google link is on this screen too, next to the feedback form.
+        showGoogleLinks();
         showReviewStep('low-rating-form');
       });
     });
@@ -164,18 +185,8 @@ document.addEventListener('DOMContentLoaded', function () {
           feedback: reviewMessageField ? reviewMessageField.value : ''
         });
 
-        var googleUrl = getGoogleReviewUrl();
-        if (reviewGoogleLinkBtn) {
-          if (googleUrl) {
-            reviewGoogleLinkBtn.style.display = '';
-            reviewGoogleLinkBtn.onclick = function () {
-              window.open(googleUrl, '_blank', 'noopener');
-            };
-          } else {
-            reviewGoogleLinkBtn.style.display = 'none';
-          }
-        }
-
+        ratingSent = true;
+        showGoogleLinks();
         showReviewStep('thanks-private');
       });
     }
